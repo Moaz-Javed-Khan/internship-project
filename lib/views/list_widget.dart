@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:internship_project/views/cart_view.dart';
 
 class ListWidget extends StatelessWidget {
   const ListWidget({super.key});
@@ -42,6 +43,22 @@ class ListWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 20),
               ),
               leading: Icon(Icons.home),
+            ),
+            const Divider(color: Colors.black),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CartView(),
+                  ),
+                );
+              },
+              title: const Text(
+                "Cart",
+                style: TextStyle(fontSize: 20),
+              ),
+              leading: const Icon(Icons.shopping_cart),
             ),
             const Divider(color: Colors.black),
           ],

@@ -10,7 +10,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -27,13 +28,20 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            // Here we take the value from the MyHomePage object that was created by
-            // the App.build method, and use it to set our appbar title.
             title: const Text("Sample"),
-            // ignore: prefer_const_literals_to_create_immutables
             actions: [
-              // const Icon(Icons.brightness_2),
-              Icon(state ? Icons.sunny : Icons.brightness_2),
+              // Icon(state ? Icons.sunny : Icons.brightness_2),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: AnimatedCrossFade(
+                  firstChild: const Icon(Icons.sunny),
+                  secondChild: const Icon(Icons.brightness_2),
+                  crossFadeState: state
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  duration: const Duration(milliseconds: 1200),
+                ),
+              )
             ],
           ),
           drawer: const ListWidget(),
@@ -81,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: _incrementCounter,
             tooltip: 'Increment',
             child: const Icon(Icons.add),
-          ), // This trailing comma makes auto-formatting nicer for build methods.
+          ),
         );
       },
     );
