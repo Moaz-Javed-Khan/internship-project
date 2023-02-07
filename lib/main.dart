@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: isDark ? ThemeData.dark() : ThemeData.light(),
       home: const MyHomePage(),
-      // home: CartView(),
     );
   }
 }
