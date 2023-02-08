@@ -4,7 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:internship_project/bloc/theme_bloc.dart';
 import 'package:internship_project/views/cart_view.dart';
 import 'package:internship_project/views/favorites_view.dart';
-import 'package:internship_project/views/list_widget.dart';
+import 'package:internship_project/widgets/list_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
