@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:internship_project/widgets/item_counter_widget.dart';
 import 'package:internship_project/widgets/reset_counter_widget.dart';
 
-class FooterWidget extends StatefulWidget {
-  const FooterWidget({
+class ProductCardFooterWidget extends StatefulWidget {
+  const ProductCardFooterWidget({
     super.key,
     required this.incrementCounter,
     required this.decrementCounter,
@@ -19,10 +19,11 @@ class FooterWidget extends StatefulWidget {
   final int count;
 
   @override
-  State<FooterWidget> createState() => _FooterWidgetState();
+  State<ProductCardFooterWidget> createState() =>
+      _ProductCardFooterWidgetState();
 }
 
-class _FooterWidgetState extends State<FooterWidget> {
+class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
   TextEditingController counterController = TextEditingController();
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/bloc/theme_bloc.dart';
 import 'package:internship_project/views/cart_view.dart';
+import 'package:internship_project/views/product_view.dart';
 
 class ListWidget extends StatelessWidget {
   const ListWidget({super.key});

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:internship_project/bloc/theme_bloc.dart';
 import 'package:internship_project/views/cart_view.dart';
+import 'package:internship_project/views/product_view.dart';
 import 'package:internship_project/views/favorites_view.dart';
 import 'package:internship_project/widgets/list_widget.dart';
 
@@ -27,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage>
   int _index = 0;
 
   final screen = [
-    const CartView(),
+    const ProductView(),
     const FavoritesView(),
   ];
 
@@ -69,9 +70,23 @@ class _MyHomePageState extends State<MyHomePage>
           appBar: AppBar(
             title: const Text("E-commerce App"),
             actions: [
+              Padding(
+                padding: const EdgeInsets.only(top: 6.0, right: 12),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CartView(),
+                      ),
+                    );
+                  },
+                  child: const Icon(Icons.shopping_cart),
+                ),
+              ),
               // Icon(state ? Icons.sunny : Icons.brightness_2),
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.only(top: 18.0, right: 10),
                 child: GestureDetector(
                   onTap: () => context.read<ThemeBloc>().add(ThemeToggled()),
                   child: AnimatedCrossFade(
@@ -86,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage>
               )
             ],
           ),
-          drawer: const ListWidget(),
+          // drawer: const ListWidget(),
           body: screen[_index],
         );
       },
