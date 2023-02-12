@@ -7,14 +7,16 @@ class CartCardFooterWidget extends StatefulWidget {
     super.key,
     required this.incrementCounter,
     required this.decrementCounter,
-    required this.resetCounter,
+    // required this.resetCounter,
+    required this.removeItem,
     required this.onChanged,
     required this.count,
   });
 
   final void Function() incrementCounter;
-  final void Function() decrementCounter;
-  final void Function() resetCounter;
+  final void Function()? decrementCounter;
+  // final void Function() resetCounter;
+  final void Function() removeItem;
   final void Function(String value) onChanged;
   final int count;
 
@@ -55,8 +57,8 @@ class _CartCardFooterWidgetState extends State<CartCardFooterWidget> {
                 child: IconButton(
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  icon: const Icon(Icons.shopping_cart),
+                  onPressed: widget.removeItem,
+                  icon: const Icon(Icons.delete),
                 ),
               ),
             ],

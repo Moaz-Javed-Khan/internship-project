@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:internship_project/bloc/theme_bloc.dart';
-import 'package:internship_project/views/cart_view.dart';
-import 'package:internship_project/views/product_view.dart';
-import 'package:internship_project/views/favorites_view.dart';
-import 'package:internship_project/widgets/list_widget.dart';
+import 'package:internship_project/dark_mode/bloc/theme_bloc.dart';
+import 'package:internship_project/cart/view/cart_view.dart';
+import 'package:internship_project/favorites/view/favorites_view.dart';
+import 'package:internship_project/products/view/product_view.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -28,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage>
   int _index = 0;
 
   final screen = [
-    const ProductView(),
+    const ProductPage(),
     const FavoritesView(),
   ];
 
@@ -38,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage>
       builder: (context, state) {
         return Scaffold(
           bottomNavigationBar: Container(
-            color: Colors.black,
+            color: Colors.blue,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GNav(
@@ -48,9 +47,9 @@ class _MyHomePageState extends State<MyHomePage>
                     _index = value;
                   });
                 },
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.blue,
                 color: Colors.white,
-                tabBackgroundColor: Colors.grey,
+                tabBackgroundColor: Colors.white,
                 padding: const EdgeInsets.all(16),
                 gap: 12,
                 // ignore: prefer_const_literals_to_create_immutables
@@ -98,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage>
                     duration: const Duration(milliseconds: 1200),
                   ),
                 ),
-              )
+              ),
             ],
           ),
           // drawer: const ListWidget(),

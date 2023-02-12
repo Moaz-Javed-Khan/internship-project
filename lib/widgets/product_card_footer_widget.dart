@@ -9,14 +9,18 @@ class ProductCardFooterWidget extends StatefulWidget {
     required this.decrementCounter,
     required this.resetCounter,
     required this.onChanged,
-    required this.count,
+    required this.addToCart,
+    required this.quantity,
+    // required this.count,
   });
 
   final void Function() incrementCounter;
-  final void Function() decrementCounter;
+  final void Function()? decrementCounter;
   final void Function() resetCounter;
+  final void Function() addToCart;
   final void Function(String value) onChanged;
-  final int count;
+  final int quantity;
+  // final int count;
 
   @override
   State<ProductCardFooterWidget> createState() =>
@@ -37,7 +41,8 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                 incrementCounter: widget.incrementCounter,
                 decrementCounter: widget.decrementCounter,
                 onChanged: widget.onChanged,
-                count: widget.count,
+                // count: widget.count,
+                count: widget.quantity,
               ),
             ],
           ),
@@ -54,7 +59,7 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                   ),
                 ),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: widget.addToCart,
                   child: const Icon(Icons.shopping_cart),
                 ),
               ),

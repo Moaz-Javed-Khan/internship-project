@@ -15,7 +15,7 @@
         "name": "item 1",
         "description": "item 1 description",
         "price": {
-            "amount": 0.00,
+            "amount": 1.00,
             "currency": "PKR"
         }
     },

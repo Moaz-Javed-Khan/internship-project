@@ -10,7 +10,7 @@ class ItemCounterWidget extends StatefulWidget {
   });
 
   final void Function() incrementCounter;
-  final void Function() decrementCounter;
+  final void Function()? decrementCounter;
   final void Function(String value) onChanged;
   final int count;
 
@@ -40,7 +40,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
               child: IconButton(
                 visualDensity: VisualDensity.compact,
                 icon: const Icon(Icons.remove),
-                onPressed: (widget.count > 0) ? widget.decrementCounter : null,
+                onPressed: widget.decrementCounter,
               ),
             ),
           ),
