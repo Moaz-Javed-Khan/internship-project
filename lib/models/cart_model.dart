@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:internship_project/models/product_model.dart';
 
 class CartItemModel {

@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:internship_project/models/product_model.dart';
-import 'package:internship_project/products/bloc/product_bloc.dart';
 import 'package:internship_project/products/bloc/product_repositories.dart';
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 

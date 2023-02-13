@@ -4,8 +4,6 @@ import 'package:internship_project/products/bloc/product_bloc.dart';
 import 'package:internship_project/products/bloc/product_repositories.dart';
 import 'package:internship_project/widgets/product_item_widget.dart';
 
-import '../bloc/product_bloc.dart';
-
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
@@ -44,11 +42,13 @@ class _ProductViewState extends State<ProductView> {
           // if (state is ProductInitial) {
           if (state.productstatus == ProductStatus.InitialState) {
             context.read<ProductBloc>().add(LoadProductEvent());
+
             // } else if (state is ProductLoadingState) {
           } else if (state.productstatus == ProductStatus.LoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+
             // } else if (state is ProductLoadedState) {
           } else if (state.productstatus == ProductStatus.LoadedState) {
             return GridView.builder(

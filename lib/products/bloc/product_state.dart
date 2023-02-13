@@ -19,13 +19,16 @@ class ProductState extends Equatable {
   final String? error;
 
   ProductState copyWith({List<ProductModel>? product, productstatus, error}) {
-    return ProductState(product: product ?? this.product);
+    return ProductState(
+      product: product ?? this.product,
+      productstatus: productstatus ?? this.productstatus,
+      error: error ?? this.error,
+    );
   }
 
   @override
-  List<Object?> get props => [product];
+  List<Object?> get props => [product, productstatus];
 }
-
 
 
 

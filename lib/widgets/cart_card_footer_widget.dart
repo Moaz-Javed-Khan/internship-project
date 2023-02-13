@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/widgets/item_counter_widget.dart';
-import 'package:internship_project/widgets/reset_counter_widget.dart';
 
 class CartCardFooterWidget extends StatefulWidget {
   const CartCardFooterWidget({

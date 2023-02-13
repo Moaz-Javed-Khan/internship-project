@@ -13,9 +13,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final a = state.item.map((e) => e).toList();
 
       a.add(CartItemModel(
-          quantity: event.item.quantity,
-          subTotal: event.item.price.amount * event.item.quantity,
-          product: event.item));
+        quantity: event.item.quantity,
+        subTotal: event.item.price.amount * event.item.quantity,
+        product: event.item,
+      ));
 
       emit(state.copyWith(item: a));
     });

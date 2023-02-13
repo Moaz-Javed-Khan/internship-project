@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = context.watch<ThemeBloc>().state;
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Intership Project',
       debugShowCheckedModeBanner: false,
       theme: isDark ? ThemeData.dark() : ThemeData.light(),
       home: const MyHomePage(),
