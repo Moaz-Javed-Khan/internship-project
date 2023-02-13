@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ItemCounterWidget extends StatefulWidget {
   const ItemCounterWidget({
     super.key,
+    this.addToCart,
     required this.incrementCounter,
     required this.decrementCounter,
     required this.onChanged,
     required this.count,
   });
 
+  final void Function()? addToCart;
   final void Function() incrementCounter;
   final void Function()? decrementCounter;
   final void Function(String value) onChanged;

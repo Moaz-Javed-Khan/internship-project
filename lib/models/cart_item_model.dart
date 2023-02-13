@@ -3,11 +3,13 @@ import 'package:internship_project/models/product_model.dart';
 class CartItemModel {
   final int quantity;
   final double subTotal;
+  final double total;
   final ProductModel product;
 
   CartItemModel({
     required this.quantity,
     required this.subTotal,
+    required this.total,
     required this.product,
   });
 
@@ -20,6 +22,7 @@ class CartItemModel {
       product: product,
       quantity: newQuantity,
       subTotal: subTotal * (newQuantity),
+      total: total,
     );
   }
 
@@ -33,6 +36,7 @@ class CartItemModel {
       product: product,
       quantity: newQuantity,
       subTotal: subTotal * (newQuantity),
+      total: total,
     );
   }
 }

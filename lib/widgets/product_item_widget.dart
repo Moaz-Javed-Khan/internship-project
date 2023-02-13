@@ -120,13 +120,14 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                     .read<ProductBloc>()
                     .add(ProductIncrement(widget.product)),
                 // decrementCounter: () => newOnChanged(count - 1),
-                decrementCounter: (widget.product.quantity <= 1)
+                decrementCounter: (widget.product.quantity <= 0)
                     ? null
                     : () => context
                         .read<ProductBloc>()
                         .add(ProductDecrement(widget.product)),
                 // incrementCounter: () =>
                 //     context.read<CartBloc>().add(CartItemIncrement()),
+                // resetCounter: () => newOnChanged(0),
                 resetCounter: () => newOnChanged(0),
                 onChanged: (value) => newOnChanged(int.tryParse(value)),
                 // count: count,

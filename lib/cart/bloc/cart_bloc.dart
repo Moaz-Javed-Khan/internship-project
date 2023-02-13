@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:internship_project/models/cart_model.dart';
+import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/models/product_model.dart';
 
 part 'cart_event.dart';
@@ -16,6 +16,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         quantity: event.item.quantity,
         subTotal: event.item.price.amount * event.item.quantity,
         product: event.item,
+        total: event.item.price.amount,
       ));
 
       emit(state.copyWith(item: a));

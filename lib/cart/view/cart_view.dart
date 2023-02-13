@@ -16,33 +16,83 @@ class _CartViewState extends State<CartView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
-        // ignore: prefer_const_literals_to_create_immutables
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(top: 4.0, right: 12),
-            child: GestureDetector(
-              onTap: () {},
-              child: const Icon(
-                Icons.shopping_cart_checkout,
-              ),
-            ),
-          ),
-        ],
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.7,
-            ),
-            itemCount: state.item.length,
-            itemBuilder: (context, index) {
-              final item = state.item[index];
-              return CartItemWidget(
-                item: item,
-              );
-            },
+          return Column(
+            children: [
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.7,
+                  ),
+                  itemCount: state.item.length,
+                  itemBuilder: (context, index) {
+                    final item = state.item[index];
+                    return CartItemWidget(
+                      item: item,
+                    );
+                  },
+                ),
+              ),
+              Container(
+                height: 80,
+                width: double.maxFinite,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const Text(
+                        "Total",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      const Text(
+                        "Rs. 100 .80",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(
+                              10,
+                            ),
+                          ),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                        ),
+                        child: Row(
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            const Text(
+                              'Checkout',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            // ignore: prefer_const_constructors
+                            SizedBox(
+                              width: 10,
+                            ),
+                            const Icon(
+                              Icons.shopping_cart_checkout,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           );
         },
       ),

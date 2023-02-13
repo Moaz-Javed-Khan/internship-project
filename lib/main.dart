@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
+import 'package:internship_project/check_out/view/check_out_view.dart';
 import 'package:internship_project/dark_mode/bloc/theme_bloc.dart';
 import 'package:internship_project/homepage.dart';
 

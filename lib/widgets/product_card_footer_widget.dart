@@ -38,6 +38,7 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
           Row(
             children: [
               ItemCounterWidget(
+                addToCart: widget.addToCart,
                 incrementCounter: widget.incrementCounter,
                 decrementCounter: widget.decrementCounter,
                 onChanged: widget.onChanged,
@@ -49,6 +50,11 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // (widget.quantity > 1)
+              //     ? const SizedBox(
+              //         height: 1,
+              //       )
+              //     :
               Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(

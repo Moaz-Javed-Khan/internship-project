@@ -43,7 +43,7 @@ class ProductModel {
 
   ProductModel decrement() {
     var newQuantity = quantity;
-    if (quantity > 1) {
+    if (quantity > 0) {
       newQuantity = quantity - 1;
     }
 

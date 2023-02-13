@@ -59,8 +59,11 @@ class _ProductViewState extends State<ProductView> {
               itemCount: state.product.length,
               itemBuilder: (context, index) {
                 final product = state.product[index];
-                return ProductItemWidget(
-                  product: product,
+                return GestureDetector(
+                  onTap: () {},
+                  child: ProductItemWidget(
+                    product: product,
+                  ),
                 );
               },
             );

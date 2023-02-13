@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
-import 'package:internship_project/models/cart_model.dart';
+import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/widgets/cart_card_footer_widget.dart';
 
 class CartItemWidget extends StatefulWidget {
