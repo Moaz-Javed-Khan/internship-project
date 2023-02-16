@@ -10,8 +10,10 @@ class CheckOutView extends StatefulWidget {
 class _CheckOutViewState extends State<CheckOutView> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Checkout!"),
+    return const Scaffold(
+      body: Center(
+        child: Text("Checkout!"),
+      ),
     );
   }
 }

@@ -3,7 +3,6 @@ class ProductModel {
   final int maxItem;
   final String name;
   final String description;
-  final int quantity;
   final PriceModel price;
 
   ProductModel({
@@ -11,9 +10,18 @@ class ProductModel {
     required this.maxItem,
     required this.name,
     required this.description,
-    required this.quantity,
     required this.price,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'maxItem': maxItem,
+      'name': name,
+      'description': description,
+      'price': price.toJson(),
+    };
+  }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
@@ -21,39 +29,7 @@ class ProductModel {
       maxItem: json['maxItem'],
       name: json['name'],
       description: json['description'],
-      quantity: 0,
       price: PriceModel.fromJson(json['price']),
-    );
-  }
-
-  ProductModel increment() {
-    var newQuantity = quantity;
-    if (quantity <= maxItem) {
-      newQuantity = quantity + 1;
-    }
-    return ProductModel(
-      quantity: newQuantity,
-      description: description,
-      id: id,
-      maxItem: maxItem,
-      name: name,
-      price: price,
-    );
-  }
-
-  ProductModel decrement() {
-    var newQuantity = quantity;
-    if (quantity > 0) {
-      newQuantity = quantity - 1;
-    }
-
-    return ProductModel(
-      quantity: newQuantity,
-      description: description,
-      id: id,
-      maxItem: maxItem,
-      name: name,
-      price: price,
     );
   }
 }
@@ -66,6 +42,13 @@ class PriceModel {
     required this.amount,
     required this.currency,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'amount': amount,
+      'currency': currency,
+    };
+  }
 
   factory PriceModel.fromJson(Map<String, dynamic> json) {
     return PriceModel(

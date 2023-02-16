@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internship_project/cart/bloc/cart_bloc.dart';
 import 'package:internship_project/widgets/item_counter_widget.dart';
 import 'package:internship_project/widgets/reset_counter_widget.dart';
 
@@ -10,7 +12,7 @@ class ProductCardFooterWidget extends StatefulWidget {
     required this.resetCounter,
     required this.onChanged,
     required this.addToCart,
-    required this.quantity,
+    required this.id,
     // required this.count,
   });
 
@@ -19,7 +21,7 @@ class ProductCardFooterWidget extends StatefulWidget {
   final void Function() resetCounter;
   final void Function() addToCart;
   final void Function(String value) onChanged;
-  final int quantity;
+  final int id;
   // final int count;
 
   @override
@@ -35,18 +37,49 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
     return Expanded(
       child: Column(
         children: [
+          const SizedBox(height: 8),
           Row(
             children: [
-              ItemCounterWidget(
-                addToCart: widget.addToCart,
-                incrementCounter: widget.incrementCounter,
-                decrementCounter: widget.decrementCounter,
-                onChanged: widget.onChanged,
-                // count: widget.count,
-                count: widget.quantity,
-              ),
+              (context.watch<CartBloc>().state.getItemQuantity(widget.id) > 0)
+                  ? ItemCounterWidget(
+                      addToCart: widget.addToCart,
+                      incrementCounter: widget.incrementCounter,
+                      decrementCounter: widget.decrementCounter,
+                      onChanged: widget.onChanged,
+                      // count: widget.count,
+                      count: context
+                          .watch<CartBloc>()
+                          .state
+                          .getItemQuantity(widget.id),
+                    )
+                  : Container(
+                      height: 45,
+                      margin: const EdgeInsets.only(left: 23),
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.blue,
+                          width: 1,
+                        ),
+                      ),
+                      child: InkWell(
+                        onTap: widget.addToCart,
+                        child: Row(
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            const Text(
+                              "Add to Cart ",
+                              style: TextStyle(fontSize: 17),
+                            ),
+                            const Icon(Icons.shopping_cart),
+                          ],
+                        ),
+                      ),
+                    ),
             ],
           ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -55,20 +88,7 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
               //         height: 1,
               //       )
               //     :
-              Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: Colors.blue,
-                    width: 1,
-                  ),
-                ),
-                child: InkWell(
-                  onTap: widget.addToCart,
-                  child: const Icon(Icons.shopping_cart),
-                ),
-              ),
+
               ResetCounterWidget(
                 resetCounter: widget.resetCounter,
               ),
@@ -82,9 +102,9 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                     width: 1,
                   ),
                 ),
-                child: InkWell(
-                  onTap: () {},
-                  child: const Icon(Icons.favorite),
+                child: IconButton(
+                  icon: const Icon(Icons.favorite),
+                  onPressed: () {},
                 ),
               ),
             ],

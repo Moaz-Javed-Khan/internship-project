@@ -105,17 +105,20 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               CartCardFooterWidget(
                 // decrementCounter: () => newOnChanged(count - 1),
                 decrementCounter: (widget.item.quantity <= 1)
-                    ? null
+                    ? () => context
+                        .read<CartBloc>()
+                        .add(CartItemRemoved(widget.item.product.id))
                     : () => context
                         .read<CartBloc>()
-                        .add(CartItemDecrement(widget.item)),
+                        .add(CartItemDecrement(widget.item.product.id)),
                 incrementCounter: () => context
                     .read<CartBloc>()
-                    .add(CartItemIncrement(widget.item)),
+                    .add(CartItemIncrement(widget.item.product.id)),
                 // incrementCounter: () => newOnChanged(count + 1),
                 // resetCounter: () => newOnChanged(0),
-                removeItem: () =>
-                    context.read<CartBloc>().add(CartItemRemoved(widget.item)),
+                removeItem: () => context
+                    .read<CartBloc>()
+                    .add(CartItemRemoved(widget.item.product.id)),
                 onChanged: (value) => newOnChanged(int.tryParse(value)),
                 count: widget.item.quantity,
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/products/bloc/product_bloc.dart';
 import 'package:internship_project/products/bloc/product_repositories.dart';
+import 'package:internship_project/products/view/product_detail_view.dart';
 import 'package:internship_project/widgets/product_item_widget.dart';
 
 class ProductPage extends StatelessWidget {
@@ -60,7 +61,16 @@ class _ProductViewState extends State<ProductView> {
               itemBuilder: (context, index) {
                 final product = state.product[index];
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetailView(
+                          product: product,
+                        ),
+                      ),
+                    );
+                  },
                   child: ProductItemWidget(
                     product: product,
                   ),

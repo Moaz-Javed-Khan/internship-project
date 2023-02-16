@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:internship_project/cart/bloc/cart_bloc.dart';
 import 'package:internship_project/dark_mode/bloc/theme_bloc.dart';
 import 'package:internship_project/cart/view/cart_view.dart';
 import 'package:internship_project/favorites/view/favorites_view.dart';
+import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/products/view/product_view.dart';
+// import 'package:internship_project/widgets/badge.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
+
+  final CartViewState cartViewInstance = CartViewState();
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -71,18 +76,25 @@ class _MyHomePageState extends State<MyHomePage>
             actions: [
               Padding(
                 padding: const EdgeInsets.only(top: 6.0, right: 12),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CartView(),
-                      ),
-                    );
-                  },
-                  child: const Icon(Icons.shopping_cart),
+                child: Badge(
+                  // label: const Text("0"),
+                  label: Text(
+                      context.watch<CartBloc>().state.item.length.toString()),
+                  backgroundColor: Colors.black,
+                  child: IconButton(
+                    icon: const Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CartView(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
+
               // Icon(state ? Icons.sunny : Icons.brightness_2),
               Padding(
                 padding: const EdgeInsets.only(top: 18.0, right: 10),

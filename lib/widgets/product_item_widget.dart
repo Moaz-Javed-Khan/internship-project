@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
+import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/models/product_model.dart';
 import 'package:internship_project/products/bloc/product_bloc.dart';
 import 'package:internship_project/widgets/product_card_footer_widget.dart';
@@ -67,6 +68,8 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var itemQuantity =
+        context.watch<CartBloc>().state.getItemQuantity(widget.product.id);
     return Card(
       elevation: 4,
       child: Padding(
@@ -117,23 +120,34 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
               ProductCardFooterWidget(
                 // incrementCounter: () => newOnChanged(count + 1),
                 incrementCounter: () => context
-                    .read<ProductBloc>()
-                    .add(ProductIncrement(widget.product)),
+                    .read<CartBloc>()
+                    .add(CartItemIncrement(widget.product.id)),
                 // decrementCounter: () => newOnChanged(count - 1),
-                decrementCounter: (widget.product.quantity <= 0)
-                    ? null
+                decrementCounter: (itemQuantity <= 1)
+                    ? () => context
+                        .read<CartBloc>()
+                        .add(CartItemRemoved(widget.product.id))
                     : () => context
-                        .read<ProductBloc>()
-                        .add(ProductDecrement(widget.product)),
+                        .read<CartBloc>()
+                        .add(CartItemDecrement(widget.product.id)),
                 // incrementCounter: () =>
                 //     context.read<CartBloc>().add(CartItemIncrement()),
                 // resetCounter: () => newOnChanged(0),
-                resetCounter: () => newOnChanged(0),
+
+                // resetCounter: () => newOnChanged(0),
+                resetCounter: () => context
+                    .read<CartBloc>()
+                    .add(CartItemRemoved(widget.product.id)),
                 onChanged: (value) => newOnChanged(int.tryParse(value)),
                 // count: count,
-                quantity: widget.product.quantity,
-                addToCart: () =>
-                    context.read<CartBloc>().add(CartItemAdded(widget.product)),
+                // quantity: widget.product.quantity,
+                id: widget.product.id,
+                addToCart: () {
+                  context
+                      .read<CartBloc>()
+                      .add(CartItemIncrement(widget.product.id));
+                  context.read<CartBloc>().add(CartItemAdded(widget.product));
+                },
                 // context.read<CartBloc>().add(CartItemAdded(widget.product, widget.product.quantity)),
               ),
             ],

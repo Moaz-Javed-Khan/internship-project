@@ -26,25 +26,5 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             productstatus: ProductStatus.ErrorState, error: e.toString()));
       }
     });
-    on<ProductIncrement>((event, emit) {
-      final incrementedItem = event.product.increment();
-
-      final stateItems = state.product.map((e) => e).toList();
-      final index = stateItems.indexOf(event.product);
-
-      stateItems[index] = incrementedItem;
-
-      emit(state.copyWith(product: stateItems));
-    });
-    on<ProductDecrement>((event, emit) {
-      final decrementedItem = event.product.decrement();
-
-      final stateItems = state.product.map((e) => e).toList();
-      final index = stateItems.indexOf(event.product);
-
-      stateItems[index] = decrementedItem;
-
-      emit(state.copyWith(product: stateItems));
-    });
   }
 }
