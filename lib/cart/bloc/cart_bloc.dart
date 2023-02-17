@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,10 +97,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   //to shared pref
   Future<void> _saveItems(List<CartItemModel> items) async {
     final jsonItems = items.map((item) => jsonEncode(item.toJson())).toList();
-    final abc = await _prefs.setStringList('items', jsonItems);
-
-    print(abc);
-    print("save wala");
+    await _prefs.setStringList('items', jsonItems);
   }
 
   //from shared pref
@@ -115,20 +111,3 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     return items;
   }
 }
-
-// void showDialog(BuildContext context, String message) {
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return AlertDialog(
-//         content: Text(message),
-//         actions: [
-//           TextButton(
-//             child: const Text("OK"),
-//             onPressed: () => Navigator.pop(context),
-//           ),
-//         ],
-//       );
-//     },
-//   );
-// }

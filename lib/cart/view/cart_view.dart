@@ -17,6 +17,40 @@ class CartViewState extends State<CartView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: TextButton(
+              onPressed: () => showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text("Are you sure"),
+                      actions: [
+                        TextButton(
+                          child: const Text("Yes"),
+                          onPressed: () {
+                            context.read<CartBloc>().add(const ClearCartItem());
+                            Navigator.pop(context);
+                          },
+                        ),
+                        TextButton(
+                          child: const Text("No"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    );
+                  }),
+              child: const Text(
+                "Clear Cart",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
@@ -35,11 +69,6 @@ class CartViewState extends State<CartView> {
                     return CartItemWidget(
                       item: item,
                     );
-                    // Container(
-                    //   width: double.infinity,
-                    //   height: 10,
-                    //   color: Colors.amber,
-                    // );
                   },
                 ),
               ),
