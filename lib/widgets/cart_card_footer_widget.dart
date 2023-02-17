@@ -55,7 +55,28 @@ class _CartCardFooterWidgetState extends State<CartCardFooterWidget> {
               child: IconButton(
                 visualDensity: VisualDensity.compact,
                 padding: EdgeInsets.zero,
-                onPressed: widget.removeItem,
+                // onPressed: widget.removeItem,
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text("Are you sure"),
+                      actions: [
+                        TextButton(
+                          child: const Text("Yes"),
+                          onPressed: () {
+                            widget.removeItem();
+                            Navigator.pop(context);
+                          },
+                        ),
+                        TextButton(
+                          child: const Text("No"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    );
+                  },
+                ),
                 icon: const Icon(Icons.delete),
               ),
             ),

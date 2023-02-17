@@ -25,7 +25,28 @@ class _ResetCounterWidgetState extends State<ResetCounterWidget> {
       ),
       child: IconButton(
         icon: const Icon(Icons.delete),
-        onPressed: widget.resetCounter,
+        // onPressed: widget.resetCounter,
+        onPressed: () => showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: const Text("Are you sure"),
+              actions: [
+                TextButton(
+                  child: const Text("Yes"),
+                  onPressed: () {
+                    widget.resetCounter();
+                    Navigator.pop(context);
+                  },
+                ),
+                TextButton(
+                  child: const Text("No"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
