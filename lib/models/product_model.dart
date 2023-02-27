@@ -1,11 +1,13 @@
-class ProductModel {
+import 'package:equatable/equatable.dart';
+
+class ProductModel extends Equatable {
   final int id;
   final int maxItem;
   final String name;
   final String description;
   final PriceModel price;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.maxItem,
     required this.name,
@@ -32,6 +34,10 @@ class ProductModel {
       price: PriceModel.fromJson(json['price']),
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class PriceModel {

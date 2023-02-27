@@ -18,7 +18,7 @@ class _CartBottomBarState extends State<CartBottomBar> {
       height: 80,
       width: double.maxFinite,
       decoration: const BoxDecoration(
-        color: Colors.blue,
+        color: Colors.orange,
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -43,59 +43,35 @@ class _CartBottomBarState extends State<CartBottomBar> {
                   ),
                 );
               },
-              child: GestureDetector(
-                onTap: () => showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: const Text("Are you sure"),
-                        actions: [
-                          TextButton(
-                            child: const Text("Yes"),
-                            onPressed: () {
-                              context
-                                  .read<CartBloc>()
-                                  .add(const ClearCartItem());
-                              Navigator.pop(context);
-                            },
-                          ),
-                          TextButton(
-                            child: const Text("No"),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      );
-                    }),
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(
-                        10,
-                      ),
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(
+                      10,
                     ),
-                    border: Border.all(
+                  ),
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    const Text(
+                      'Checkout',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    // ignore: prefer_const_constructors
+                    SizedBox(
+                      width: 10,
+                    ),
+                    const Icon(
+                      Icons.shopping_cart_checkout,
                       color: Colors.white,
-                      width: 1,
                     ),
-                  ),
-                  child: Row(
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      const Text(
-                        'Checkout',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      // ignore: prefer_const_constructors
-                      SizedBox(
-                        width: 10,
-                      ),
-                      const Icon(
-                        Icons.shopping_cart_checkout,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),

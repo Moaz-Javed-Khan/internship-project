@@ -17,6 +17,7 @@ class CartViewState extends State<CartView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
+        backgroundColor: Colors.orange,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
@@ -58,6 +59,7 @@ class CartViewState extends State<CartView> {
             children: [
               Expanded(
                 child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
                   // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   //   crossAxisCount: 2,
                   //   childAspectRatio: 0.7,
@@ -66,9 +68,7 @@ class CartViewState extends State<CartView> {
                   itemCount: state.item.length,
                   itemBuilder: (context, index) {
                     final item = state.item[index];
-                    return CartItemWidget(
-                      item: item,
-                    );
+                    return CartItemWidget(item: item);
                   },
                 ),
               ),

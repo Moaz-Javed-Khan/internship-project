@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/products/bloc/product_bloc.dart';
 import 'package:internship_project/products/bloc/product_repositories.dart';
 import 'package:internship_project/products/view/product_detail_view.dart';
+import 'package:internship_project/widgets/carousel_widget.dart';
 import 'package:internship_project/widgets/product_item_widget.dart';
 
 class ProductPage extends StatelessWidget {
@@ -52,30 +53,40 @@ class _ProductViewState extends State<ProductView> {
 
             // } else if (state is ProductLoadedState) {
           } else if (state.productstatus == ProductStatus.LoadedState) {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
-              ),
-              itemCount: state.product.length,
-              itemBuilder: (context, index) {
-                final product = state.product[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailView(
+            return Column(
+              children: [
+                const Expanded(
+                  child: CarouselWidget(),
+                ),
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.74,
+                    ),
+                    itemCount: state.product.length,
+                    itemBuilder: (context, index) {
+                      final product = state.product[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailView(
+                                product: product,
+                              ),
+                            ),
+                          );
+                        },
+                        child: ProductItemWidget(
                           product: product,
                         ),
-                      ),
-                    );
-                  },
-                  child: ProductItemWidget(
-                    product: product,
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             );
             // } else if (state is ProductErrorState) {
           } else if (state.productstatus == ProductStatus.ErrorState) {

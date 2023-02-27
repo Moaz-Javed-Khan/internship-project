@@ -13,7 +13,10 @@ class CartState extends Equatable {
     double total = 0;
     for (int i = 0; i < item.length; i++) {
       total += item[i].subTotal;
+      // total = item.fold(0, (total, subtotal) => total + subtotal);
     }
+
+    print(total);
 
     return total;
   }

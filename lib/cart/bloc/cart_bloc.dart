@@ -21,8 +21,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(state.copyWith(item: _loadItems()));
     });
     on<CartItemAdded>((event, emit) async {
-      print("added1");
-
       final a = state.item.map((e) => e).toList();
 
       final itemExists = a.any((item) => item.product.name == event.item.name);
@@ -37,7 +35,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       emit(state.copyWith(item: a));
 
-      print("added2");
       await _saveItems(a);
     });
     on<CartItemRemoved>((event, emit) async {

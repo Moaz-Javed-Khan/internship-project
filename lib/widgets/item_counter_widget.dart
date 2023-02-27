@@ -8,6 +8,7 @@ class ItemCounterWidget extends StatefulWidget {
     required this.decrementCounter,
     required this.onChanged,
     required this.count,
+    required this.maxItem,
   });
 
   final void Function()? addToCart;
@@ -15,67 +16,58 @@ class ItemCounterWidget extends StatefulWidget {
   final void Function()? decrementCounter;
   final void Function(String value) onChanged;
   final int count;
+  final int maxItem;
 
   @override
   State<ItemCounterWidget> createState() => _ItemCounterWidgetState();
 }
 
 class _ItemCounterWidgetState extends State<ItemCounterWidget> {
+  maxItemSnackbar() {
+    final snackBar = SnackBar(
+      content: const Text('Reached Max quantity, can\'t increment more'),
+      backgroundColor: (Colors.black),
+      action: SnackBarAction(
+        label: 'dismiss',
+        onPressed: () {},
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Opacity(
-            opacity: (widget.count > 0) ? 1.0 : 0.5,
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  color: Colors.blue,
-                  width: 1,
-                ),
-              ),
-              child: IconButton(
-                visualDensity: VisualDensity.compact,
-                icon: const Icon(Icons.remove),
-                onPressed: widget.decrementCounter,
-              ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          visualDensity: VisualDensity.compact,
+          icon: const Icon(Icons.remove),
+          onPressed: widget.decrementCounter,
+        ),
+        SizedBox(
+          width: 50,
+          child: TextField(
+            decoration: const InputDecoration(
+              border: InputBorder.none,
             ),
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            // onChanged: (value) => count = int.parse(value),
+            onChanged: widget.onChanged,
+            controller: TextEditingController(text: '${widget.count}'),
           ),
-          Expanded(
-            child: TextField(
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-              ),
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              // onChanged: (value) => count = int.parse(value),
-              onChanged: widget.onChanged,
-              controller: TextEditingController(text: '${widget.count}'),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(
-                color: Colors.blue,
-                width: 1,
-              ),
-            ),
-            child: IconButton(
-              visualDensity: VisualDensity.compact,
-              padding: EdgeInsets.zero,
-              onPressed: widget.incrementCounter,
-              icon: const Icon(Icons.add),
-            ),
-          ),
-        ],
-      ),
+        ),
+        IconButton(
+          visualDensity: VisualDensity.compact,
+          padding: EdgeInsets.zero,
+          onPressed: (widget.count == widget.maxItem)
+              ? () => maxItemSnackbar()
+              : widget.incrementCounter,
+          icon: const Icon(Icons.add),
+        ),
+      ],
     );
   }
 }

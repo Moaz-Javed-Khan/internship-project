@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage>
       builder: (context, state) {
         return Scaffold(
           bottomNavigationBar: Container(
-            color: Colors.blue,
+            color: Colors.orange,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GNav(
@@ -52,9 +52,10 @@ class _MyHomePageState extends State<MyHomePage>
                     _index = value;
                   });
                 },
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.orange,
                 color: Colors.white,
                 tabBackgroundColor: Colors.white,
+                activeColor: Colors.black,
                 padding: const EdgeInsets.all(16),
                 gap: 12,
                 // ignore: prefer_const_literals_to_create_immutables
@@ -72,10 +73,11 @@ class _MyHomePageState extends State<MyHomePage>
             ),
           ),
           appBar: AppBar(
+            backgroundColor: Colors.orange,
             title: const Text("E-commerce App"),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(top: 6.0, right: 12),
+                padding: const EdgeInsets.only(top: 8.0, right: 12),
                 child: Badge(
                   // label: const Text("0"),
                   label: Text(

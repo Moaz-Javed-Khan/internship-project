@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internship_project/cart/bloc/cart_bloc.dart';
 import 'package:internship_project/check_out/view/check_out_view.dart';
 import 'package:internship_project/models/product_model.dart';
+import 'package:internship_project/widgets/product_card_footer_widget.dart';
+
+import '../../favorites/bloc/favorites_bloc.dart';
 
 class ProductDetailView extends StatefulWidget {
   const ProductDetailView({
@@ -15,11 +20,26 @@ class ProductDetailView extends StatefulWidget {
 }
 
 class _ProductDetailViewState extends State<ProductDetailView> {
+  int count = 0;
+
+  void newOnChanged(int? value) {
+    if (value != null) {
+      setState(() {
+        count = value;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var itemQuantity =
+        context.watch<CartBloc>().state.getItemQuantity(widget.product.id);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Laptop"),
+        title: Text(
+          widget.product.name,
+        ),
+        backgroundColor: Colors.orange,
       ),
       body: Padding(
         padding: const EdgeInsets.all(6.0),
@@ -36,19 +56,13 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               children: [
                 Text(
                   widget.product.name,
-                  style: const TextStyle(fontSize: 22),
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.bold),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      widget.product.price.amount.toString(),
-                      style: const TextStyle(fontSize: 22),
-                    ),
-                    Text(
-                      widget.product.price.currency,
-                      style: const TextStyle(fontSize: 22),
-                    ),
-                  ],
+                Text(
+                  '${widget.product.price.amount} ${widget.product.price.currency}',
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -62,49 +76,41 @@ class _ProductDetailViewState extends State<ProductDetailView> {
             const SizedBox(
               height: 30,
             ),
-            // GestureDetector(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) => const CheckOutView(),
-            //       ),
-            //     );
-            //   },
-            // child: Container(
-            //   width: 145,
-            //   padding: const EdgeInsets.all(5),
-            //   decoration: BoxDecoration(
-            //     borderRadius: const BorderRadius.all(
-            //       Radius.circular(
-            //         10,
-            //       ),
-            //     ),
-            //     border: Border.all(
-            //       color: Colors.blue,
-            //       width: 1,
-            //     ),
-            //   ),
-            //   child: Row(
-            //     // ignore: prefer_const_literals_to_create_immutables
-            //     children: [
-            //       const Text(
-            //         'Add to cart',
-            //         style: TextStyle(
-            //           fontSize: 20,
-            //         ),
-            //       ),
-            //       // ignore: prefer_const_constructors
-            //       SizedBox(
-            //         width: 10,
-            //       ),
-            //       const Icon(
-            //         Icons.shopping_cart,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // ),
+            Container(
+              width: 180,
+              alignment: Alignment.bottomCenter,
+              child: ProductCardFooterWidget(
+                incrementCounter: () => context
+                    .read<CartBloc>()
+                    .add(CartItemIncrement(widget.product.id)),
+                decrementCounter: (itemQuantity <= 1)
+                    ? () => context
+                        .read<CartBloc>()
+                        .add(CartItemRemoved(widget.product.id))
+                    : () => context
+                        .read<CartBloc>()
+                        .add(CartItemDecrement(widget.product.id)),
+                resetCounter: () => context
+                    .read<CartBloc>()
+                    .add(CartItemRemoved(widget.product.id)),
+                onChanged: (value) => newOnChanged(int.tryParse(value)),
+                id: widget.product.id,
+                addToCart: () {
+                  context
+                      .read<CartBloc>()
+                      .add(CartItemIncrement(widget.product.id));
+                  context.read<CartBloc>().add(CartItemAdded(widget.product));
+                },
+                maxItem: widget.product.maxItem,
+                quantity: context
+                    .read<CartBloc>()
+                    .state
+                    .getItemQuantity(widget.product.id),
+                addToFavorite: () => context.read<FavoritesBloc>().add(
+                      FavoriteItemAdded(widget.product),
+                    ),
+              ),
+            ),
           ],
         ),
       ),
