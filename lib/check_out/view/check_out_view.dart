@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
+import 'package:internship_project/check_out/view/thank_you_view.dart';
 import 'package:place_picker/place_picker.dart';
 
 class CheckOutView extends StatefulWidget {
-  const CheckOutView({super.key});
+  CheckOutView({super.key});
 
   @override
   State<CheckOutView> createState() => _CheckOutViewState();
@@ -20,6 +21,7 @@ class _CheckOutViewState extends State<CheckOutView> {
         builder: (context) => PlacePicker(apiKey),
       ),
     );
+    Text("Selected Location: $result");
     print(result);
   }
 
@@ -169,8 +171,17 @@ class _CheckOutViewState extends State<CheckOutView> {
                 showPlacePicker();
               },
             ),
+            const Text("Selected Location: "),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<CartBloc>().add(const ClearCartItem());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ThankYouView(),
+                  ),
+                );
+              },
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.black,
                 side: const BorderSide(color: Colors.orange),

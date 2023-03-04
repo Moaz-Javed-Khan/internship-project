@@ -13,11 +13,19 @@ dependencies:
   bloc: ^8.1.0
   equatable: ^2.0.5
   flutter_bloc: ^8.1.1
+  flutter_signin_button: ^2.0.0
+  firebase_core: ^2.7.0
+  firebase_auth: ^4.2.9
   google_nav_bar: ^5.0.6
+  google_sign_in: ^6.0.1
   hydrated_bloc: ^9.1.0
   place_picker: ^0.10.0
   path_provider: ^2.0.13
   shared_preferences: ^2.0.17
+
+  cloud_firestore: ^4.4.3
+  firebase_database: ^10.0.14
+  firebase_storage: ^11.0.14
 
   cupertino_icons: ^1.0.2
   google_maps_flutter: ^2.2.4

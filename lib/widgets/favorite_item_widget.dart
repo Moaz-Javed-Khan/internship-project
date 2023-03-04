@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/models/product_model.dart';
+import 'package:internship_project/products/view/product_detail_view.dart';
 
 class FavoriteItemWidget extends StatefulWidget {
   const FavoriteItemWidget({
@@ -18,15 +19,30 @@ class FavoriteItemWidget extends StatefulWidget {
 class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(widget.favoriteItem.name),
-        trailing: IconButton(
-          color: Colors.red,
-          icon: const Icon(Icons.favorite),
-          onPressed: () => context.read<FavoritesBloc>().add(
-                FavoriteItemRemoved(widget.favoriteItem.id),
-              ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailView(
+              product: widget.favoriteItem,
+            ),
+          ),
+        );
+      },
+      child: Card(
+        child: ListTile(
+          title: Text(widget.favoriteItem.name),
+          leading: Image.network(
+            widget.favoriteItem.image,
+          ),
+          trailing: IconButton(
+            color: Colors.red,
+            icon: const Icon(Icons.favorite),
+            onPressed: () => context.read<FavoritesBloc>().add(
+                  FavoriteItemRemoved(widget.favoriteItem.id),
+                ),
+          ),
         ),
       ),
     );

@@ -79,8 +79,11 @@ class _ProductViewState extends State<ProductView> {
                             ),
                           );
                         },
-                        child: ProductItemWidget(
-                          product: product,
+                        child: Hero(
+                          tag: 'animatedImage',
+                          child: ProductItemWidget(
+                            product: product,
+                          ),
                         ),
                       );
                     },
@@ -90,6 +93,7 @@ class _ProductViewState extends State<ProductView> {
             );
             // } else if (state is ProductErrorState) {
           } else if (state.productstatus == ProductStatus.ErrorState) {
+            return Center(child: Text(state.error ?? ''));
             // context.read<ProductBloc>().add(LoadProductEvent());
           }
           return const SizedBox();

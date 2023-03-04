@@ -39,7 +39,7 @@ class _CartBottomBarState extends State<CartBottomBar> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const CheckOutView(),
+                    builder: (context) => CheckOutView(),
                   ),
                 );
               },

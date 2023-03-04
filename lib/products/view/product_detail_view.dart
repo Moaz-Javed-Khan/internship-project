@@ -45,8 +45,11 @@ class _ProductDetailViewState extends State<ProductDetailView> {
         padding: const EdgeInsets.all(6.0),
         child: Column(
           children: [
-            Image.asset(
-              "assets/image.jpg",
+            Hero(
+              tag: 'animatedImage',
+              child: Image.network(
+                widget.product.image,
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -109,6 +112,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                 addToFavorite: () => context.read<FavoritesBloc>().add(
                       FavoriteItemAdded(widget.product),
                     ),
+                product: widget.product,
               ),
             ),
           ],

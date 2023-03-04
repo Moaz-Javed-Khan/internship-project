@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
+import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
+import 'package:internship_project/models/product_model.dart';
 import 'package:internship_project/widgets/item_counter_widget.dart';
 import 'package:internship_project/widgets/reset_counter_widget.dart';
 
@@ -16,6 +18,7 @@ class ProductCardFooterWidget extends StatefulWidget {
     required this.maxItem,
     required this.quantity,
     required this.addToFavorite,
+    required this.product,
     // required this.count,
   });
 
@@ -29,6 +32,8 @@ class ProductCardFooterWidget extends StatefulWidget {
   final int maxItem;
   final int quantity;
   // final int count;
+
+  final ProductModel product;
 
   @override
   State<ProductCardFooterWidget> createState() =>
@@ -102,7 +107,16 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                     ),
               // Icons.favorite : Icons.favorite_border
               IconButton(
-                icon: const Icon(Icons.favorite_border),
+                icon: context
+                        .read<FavoritesBloc>()
+                        .state
+                        .favoriteItem
+                        .contains(widget.product)
+                    ? const Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
+                    : const Icon(Icons.favorite_border),
                 onPressed: widget.addToFavorite,
               ),
             ],

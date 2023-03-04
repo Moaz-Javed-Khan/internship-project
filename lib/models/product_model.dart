@@ -2,25 +2,31 @@ import 'package:equatable/equatable.dart';
 
 class ProductModel extends Equatable {
   final int id;
+  final String image;
   final int maxItem;
   final String name;
   final String description;
+  final bool featured;
   final PriceModel price;
 
   const ProductModel({
     required this.id,
+    required this.image,
     required this.maxItem,
     required this.name,
     required this.description,
+    required this.featured,
     required this.price,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'image': image,
       'maxItem': maxItem,
       'name': name,
       'description': description,
+      'featured': featured,
       'price': price.toJson(),
     };
   }
@@ -28,23 +34,32 @@ class ProductModel extends Equatable {
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       id: json['id'],
+      image: json['image'],
       maxItem: json['maxItem'],
       name: json['name'],
       description: json['description'],
+      featured: json['featured'],
       price: PriceModel.fromJson(json['price']),
     );
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [
+        id,
+        image,
+        maxItem,
+        name,
+        description,
+        featured,
+        price,
+      ];
 }
 
-class PriceModel {
+class PriceModel extends Equatable {
   final double amount;
   final String currency;
 
-  PriceModel({
+  const PriceModel({
     required this.amount,
     required this.currency,
   });
@@ -62,4 +77,7 @@ class PriceModel {
       currency: json['currency'],
     );
   }
+
+  @override
+  List<Object?> get props => [amount, currency];
 }

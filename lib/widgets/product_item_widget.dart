@@ -83,8 +83,9 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                "assets/image.jpg",
+              Image.network(
+                // "assets/image.jpg",
+                widget.product.image,
                 height: 100,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -155,6 +156,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                 addToFavorite: () => context.read<FavoritesBloc>().add(
                       FavoriteItemAdded(widget.product),
                     ),
+                product: widget.product,
               ),
             ],
           ),

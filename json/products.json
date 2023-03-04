@@ -1,65 +1,71 @@
 [
     {
-        "Image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112",
+        "image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112",
         "id": 0,
         "maxItem": 8,
         "name": "Watch",
         "description": "item 0 description",
+        "featured": true,
         "price": {
             "amount": 2000.00,
             "currency": "PKR"
         }
     },
     {
-        "Image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112",
+        "image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/glasses-removebg-preview.png?alt=media&token=0b12e32c-a361-4bb1-8271-425ebc28bbd5",
         "id": 1,
         "maxItem": 10,
         "name": "Glasses",
         "description": "item 1 description",
+        "featured": false,
         "price": {
             "amount": 1000.00,
             "currency": "PKR"
         }
     },
     {
-        "Image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112",
+        "image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/wallet-removebg-preview.png?alt=media&token=1fd0b23e-dab1-49d9-9921-2262bcbba91c",
         "id": 2,
         "maxItem": 9,
         "name": "Wallet",
         "description": "item 2 description",
+        "featured": true,
         "price": {
             "amount": 9.00,
             "currency": "PKR"
         }
     },
     {
-        "Image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112",
+        "image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/keychain-removebg-preview.png?alt=media&token=08fe7f0f-d760-4cb3-9463-b30d1317f858",
         "id": 3,
         "maxItem": 7,
         "name": "Keychain",
         "description": "item 3 description",
+        "featured": false,
         "price": {
             "amount": 7.00,
             "currency": "PKR"
         }
     },
     {
-        "Image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112",
+        "image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/belt1-removebg-preview.png?alt=media&token=a9e75d30-5e10-4546-af40-d40a96bd2f26",
         "id": 4,
         "maxItem": 8,
         "name": "Belt",
         "description": "item 4 description",
+        "featured": true,
         "price": {
             "amount": 2.00,
             "currency": "PKR"
         }
     },
     {
-        "Image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112",
+        "image": "https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/bag-removebg-preview.png?alt=media&token=56f6e2cb-6efa-4986-9013-bf573ae241ef",
         "id": 5,
         "maxItem": 6,
         "name": "Laptop Bag",
         "description": "item 5 description",
+        "featured": false,
         "price": {
             "amount": 6.00,
             "currency": "PKR"

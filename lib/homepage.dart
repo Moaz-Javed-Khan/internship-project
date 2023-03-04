@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:internship_project/auth/sign%20in/view/sign_in_view.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
 import 'package:internship_project/dark_mode/bloc/theme_bloc.dart';
 import 'package:internship_project/cart/view/cart_view.dart';
@@ -110,6 +112,21 @@ class _MyHomePageState extends State<MyHomePage>
                         : CrossFadeState.showSecond,
                     duration: const Duration(milliseconds: 1200),
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0, right: 4.0),
+                child: IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInView(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:internship_project/models/product_model.dart';
 
 class CarouselWidget extends StatefulWidget {
   const CarouselWidget({super.key});
+
+  // final ProductModel featuredItem;
 
   @override
   State<CarouselWidget> createState() => CarouselWidgetState();
@@ -25,7 +28,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
 
   Timer getTimer() {
     return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (pageNo == 2) {
+      if (pageNo == 3) {
         pageNo = 0;
       }
       pageController.animateToPage(
