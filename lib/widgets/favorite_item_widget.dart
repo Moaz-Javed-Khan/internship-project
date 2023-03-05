@@ -31,17 +31,20 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
         );
       },
       child: Card(
-        child: ListTile(
-          title: Text(widget.favoriteItem.name),
-          leading: Image.network(
-            widget.favoriteItem.image,
-          ),
-          trailing: IconButton(
-            color: Colors.red,
-            icon: const Icon(Icons.favorite),
-            onPressed: () => context.read<FavoritesBloc>().add(
-                  FavoriteItemRemoved(widget.favoriteItem.id),
-                ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            title: Text(widget.favoriteItem.name),
+            leading: Image.network(
+              widget.favoriteItem.image,
+            ),
+            trailing: IconButton(
+              color: Colors.red,
+              icon: const Icon(Icons.favorite),
+              onPressed: () => context.read<FavoritesBloc>().add(
+                    FavoriteItemRemoved(widget.favoriteItem.id),
+                  ),
+            ),
           ),
         ),
       ),

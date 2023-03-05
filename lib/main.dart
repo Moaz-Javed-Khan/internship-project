@@ -11,7 +11,6 @@ import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/homepage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'auth/sign up/view/sign_up_view.dart';
-import 'check_out/view/thank_you_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,7 +65,6 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: isDark ? ThemeData.dark() : ThemeData.light(),
       home: user != null ? MyHomePage() : SignUpView(),
-      // home: const ThankYouView(),
     );
   }
 }

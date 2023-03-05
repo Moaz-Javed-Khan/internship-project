@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
-import 'package:internship_project/check_out/view/check_out_view.dart';
 import 'package:internship_project/models/product_model.dart';
 import 'package:internship_project/widgets/product_card_footer_widget.dart';
 
@@ -45,11 +44,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
         padding: const EdgeInsets.all(6.0),
         child: Column(
           children: [
-            Hero(
-              tag: 'animatedImage',
-              child: Image.network(
-                widget.product.image,
-              ),
+            Image.network(
+              widget.product.image,
             ),
             const SizedBox(
               height: 10,

@@ -1,8 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/models/product_model.dart';
+import 'package:internship_project/products/bloc/product_bloc.dart';
+import 'package:internship_project/products/view/product_detail_view.dart';
 
 class CarouselWidget extends StatefulWidget {
   const CarouselWidget({super.key});
@@ -14,12 +19,6 @@ class CarouselWidget extends StatefulWidget {
 }
 
 class CarouselWidgetState extends State<CarouselWidget> {
-  List images = [
-    'https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/belt1-removebg-preview.png?alt=media&token=a9e75d30-5e10-4546-af40-d40a96bd2f26',
-    'https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/image.jpg?alt=media&token=91dda48e-fa2a-43fa-85ca-0dd40c54d112',
-    'https://firebasestorage.googleapis.com/v0/b/exam-f15a2.appspot.com/o/wallet-removebg-preview.png?alt=media&token=1fd0b23e-dab1-49d9-9921-2262bcbba91c',
-  ];
-
   late final PageController pageController;
   final ScrollController _scrollController = ScrollController();
   int pageNo = 0;
@@ -67,6 +66,13 @@ class CarouselWidgetState extends State<CarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
+    List featuredProducts = context
+        .read<ProductBloc>()
+        .state
+        .product
+        .where((e) => e.featured)
+        .toList();
+
     return SizedBox(
       height: 100,
       child: PageView.builder(
@@ -82,7 +88,16 @@ class CarouselWidgetState extends State<CarouselWidget> {
               return child!;
             },
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetailView(
+                      product: featuredProducts[index],
+                    ),
+                  ),
+                );
+              },
               onPanDown: (d) {
                 carasouelTmer?.cancel();
                 carasouelTmer = null;
@@ -98,7 +113,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
                   color: Colors.amberAccent,
                 ),
                 child: Image.network(
-                  images[index],
+                  featuredProducts[index].image,
                   width: 100,
                   height: 100,
                 ),
@@ -106,7 +121,7 @@ class CarouselWidgetState extends State<CarouselWidget> {
             ),
           );
         },
-        itemCount: 3,
+        itemCount: featuredProducts.length,
       ),
     );
   }

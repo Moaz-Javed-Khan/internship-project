@@ -55,9 +55,7 @@ class _ProductViewState extends State<ProductView> {
           } else if (state.productstatus == ProductStatus.LoadedState) {
             return Column(
               children: [
-                const Expanded(
-                  child: CarouselWidget(),
-                ),
+                const Expanded(child: CarouselWidget()),
                 Expanded(
                   child: GridView.builder(
                     gridDelegate:
@@ -79,11 +77,8 @@ class _ProductViewState extends State<ProductView> {
                             ),
                           );
                         },
-                        child: Hero(
-                          tag: 'animatedImage',
-                          child: ProductItemWidget(
-                            product: product,
-                          ),
+                        child: ProductItemWidget(
+                          product: product,
                         ),
                       );
                     },
