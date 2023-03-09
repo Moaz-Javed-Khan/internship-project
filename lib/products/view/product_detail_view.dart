@@ -6,6 +6,25 @@ import 'package:internship_project/widgets/product_card_footer_widget.dart';
 
 import '../../favorites/bloc/favorites_bloc.dart';
 
+class ProductDetail extends StatelessWidget {
+  const ProductDetail({
+    super.key,
+    required this.product,
+    required this.bloc,
+  });
+
+  final ProductModel product;
+  final FavoritesBloc bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: bloc,
+      child: ProductDetailView(product: product),
+    );
+  }
+}
+
 class ProductDetailView extends StatefulWidget {
   const ProductDetailView({
     super.key,

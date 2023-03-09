@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:internship_project/models/product_model.dart';
 
@@ -8,57 +9,66 @@ part 'favorites_state.dart';
 class FavoritesBloc extends HydratedBloc<FavoritesEvent, FavoritesState> {
   FavoritesBloc() : super(const FavoritesState()) {
     on<FavoriteItemAdded>((event, emit) async {
-      final a = state.favoriteItem.map((e) => e).toList();
+      if (state.currentUser?.uid == null) return;
+      final a =
+          state.userFavorites[state.currentUser!.uid]?.map((e) => e).toList();
 
-      final itemExists = a.any((item) => item.name == event.favoriteItem.name);
-      if (!itemExists) {
-        a.add(event.favoriteItem);
+      if (a != null) {
+        final itemExists =
+            a.any((item) => item.name == event.favoriteItem.name);
+        if (!itemExists) {
+          a.add(event.favoriteItem);
+        }
       }
 
-      emit(state.copyWith(item: a));
+      final b = state.userFavorites.map((key, value) => MapEntry(key, value));
+
+      b[state.currentUser!.uid] = a ?? [event.favoriteItem];
+
+      emit(state.copyWith(userFavorites: b));
     });
     on<FavoriteItemRemoved>((event, emit) async {
-      final itemFound = state.favoriteItem.where((item) => item.id == event.id);
+      final itemFound = state.userFavorites[state.currentUser!.uid]
+          ?.where((item) => item.id == event.id);
 
-      if (itemFound.isEmpty) return;
+      if (itemFound == null || itemFound.isEmpty) return;
 
-      final a = state.favoriteItem.map((e) => e).toList();
+      final a =
+          state.userFavorites[state.currentUser!.uid]?.map((e) => e).toList();
+
+      if (a == null) return;
+
       final index = a.indexOf(itemFound.first);
 
       a.removeAt(index);
 
-      emit(state.copyWith(item: a));
+      final b = state.userFavorites.map((key, value) => MapEntry(key, value));
+
+      b[state.currentUser!.uid] = a;
+
+      emit(state.copyWith(userFavorites: b));
     });
   }
 
   @override
   FavoritesState? fromJson(Map<String, dynamic> json) {
-    final favoriteState = json['favoritesState'] as List;
-    var list = favoriteState.map((e) => ProductModel.fromJson(e)).toList();
-    return FavoritesState(favoriteItem: list);
+    print("JSON DAta: $json");
+    return FavoritesState.fromJson(json);
   }
 
   @override
-  Map<String, dynamic>? toJson(FavoritesState state) {
-    return {
-      'favoritesState': state.favoriteItem.map((e) => e.toJson()).toList()
-    };
-  }
+  Map<String, dynamic>? toJson(FavoritesState state) => state.toJson();
 }
 
+/*
+final favoriteState = json['ZkXPUM1cgCWUAyVW3NL3isCk2gw1']['favoritesState'] as List;
 
-
-
-
-
-
-
-
-
-
-
-
-
+{
+  'ZkXPUM1cgCWUAyVW3NL3isCk2gw1': {
+    'favoritesState': state.favoriteItem.map((e) => e.toJson()).toList()
+  }
+}
+ */
 
 // import 'dart:convert';
 

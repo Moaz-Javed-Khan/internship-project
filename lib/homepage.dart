@@ -6,10 +6,21 @@ import 'package:internship_project/auth/sign%20in/view/sign_in_view.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
 import 'package:internship_project/dark_mode/bloc/theme_bloc.dart';
 import 'package:internship_project/cart/view/cart_view.dart';
+import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/favorites/view/favorites_view.dart';
-import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/products/view/product_view.dart';
-// import 'package:internship_project/widgets/badge.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => FavoritesBloc(),
+      child: MyHomePage(),
+    );
+  }
+}
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -118,8 +129,11 @@ class _MyHomePageState extends State<MyHomePage>
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0),
                 child: IconButton(
                   icon: const Icon(Icons.logout),
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    // ignore: use_build_context_synchronously
+                    context.read<CartBloc>().add(const ClearCartItem());
+                    // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

@@ -112,10 +112,10 @@ class SignInView extends StatelessWidget {
                             .user;
                     if (firebaseUser != null) {
                       // ignore: use_build_context_synchronously
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyHomePage(),
+                          builder: (context) => const HomePage(),
                         ),
                       );
                     } else {

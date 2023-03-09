@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,20 +92,63 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     });
   }
 
+  User? currentUser = FirebaseAuth.instance.currentUser;
+
   //to shared pref
   Future<void> _saveItems(List<CartItemModel> items) async {
-    final jsonItems = items.map((item) => jsonEncode(item.toJson())).toList();
-    await _prefs.setStringList('items', jsonItems);
+    final jsonItems = items.map((item) => (item.toJson())).toList();
+    final a = {'items': jsonItems};
+    await _prefs.setString(currentUser?.uid ?? '', jsonEncode(a));
   }
 
   //from shared pref
   List<CartItemModel>? _loadItems() {
-    final jsonItems = _prefs.getStringList('items');
+    final jsonItems = _prefs.getString(currentUser?.uid ?? '');
     if (jsonItems == null) return null;
 
-    final items = jsonItems
-        .map((json) => CartItemModel.fromJson(jsonDecode(json)))
+    final decodeJsonItems = jsonDecode(jsonItems);
+
+    final items = (decodeJsonItems['items'] as List)
+        .map((json) => CartItemModel.fromJson(json))
+        .toList();
+    return items;
+
+    // final items = jsonItems
+    //     .map((json) => CartItemModel.fromJson(jsonDecode(json)))
+    //     .toList();
+    // return items;
+  }
+}
+
+
+
+
+
+
+
+/*
+Before:
+{
+  'items': [{..}, {..}, ...]
+}
+
+After:
+{
+  'ZkXPUM1cgCWUAyVW3NL3isCk2gw1': {
+    'items': [{..}, {..}, ...]
+  }
+}
+
+
+temModel>? _loadItems() {
+    final jsonItems = _prefs.getString('ZkXPUM1cgCWUAyVW3NL3isCk2gw1');
+    if (jsonItems == null) return null;
+
+    final a = jsonDeode(jsonItems);
+
+    final items = (a['items'] as List)
+        .map((json) => CartItemModel.fromJson(json))
         .toList();
     return items;
   }
-}
+ */

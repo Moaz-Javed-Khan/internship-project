@@ -66,7 +66,7 @@ class _ThankYouViewState extends State<ThankYouView> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MyHomePage(),
+                      builder: (context) => const HomePage(),
                     ),
                   );
                 },

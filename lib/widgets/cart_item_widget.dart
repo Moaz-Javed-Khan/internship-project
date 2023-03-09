@@ -86,7 +86,11 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             children: [
               ColoredBox(
                 color: Colors.black.withOpacity(0.01),
-                child: Image.asset("assets/image.jpg", height: 120, width: 120),
+                child: Image.network(
+                  widget.item.product.image,
+                  height: 120,
+                  width: 120,
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(

@@ -108,7 +108,7 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
               // Icons.favorite : Icons.favorite_border
               IconButton(
                 icon: context
-                        .read<FavoritesBloc>()
+                        .watch<FavoritesBloc>()
                         .state
                         .favoriteItem
                         .contains(widget.product)

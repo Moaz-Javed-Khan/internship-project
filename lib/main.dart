@@ -32,9 +32,6 @@ Future<void> main() async {
         BlocProvider(
           create: (context) => CartBloc()..add(CartItemInitial()),
         ),
-        BlocProvider(
-          create: (context) => FavoritesBloc(),
-        ),
       ],
       child: const MyApp(),
     ),
@@ -64,7 +61,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Intership Project',
       debugShowCheckedModeBanner: false,
       theme: isDark ? ThemeData.dark() : ThemeData.light(),
-      home: user != null ? MyHomePage() : SignUpView(),
+      home: user != null ? const HomePage() : SignUpView(),
     );
   }
 }

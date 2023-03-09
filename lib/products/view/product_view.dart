@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/products/bloc/product_bloc.dart';
 import 'package:internship_project/products/bloc/product_repositories.dart';
 import 'package:internship_project/products/view/product_detail_view.dart';
@@ -68,12 +69,16 @@ class _ProductViewState extends State<ProductView> {
                       final product = state.product[index];
                       return GestureDetector(
                         onTap: () {
+                          var bloc = context.read<FavoritesBloc>();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProductDetailView(
-                                product: product,
-                              ),
+                              builder: (context) {
+                                return ProductDetail(
+                                  bloc: bloc,
+                                  product: product,
+                                );
+                              },
                             ),
                           );
                         },
