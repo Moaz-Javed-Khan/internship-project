@@ -37,54 +37,63 @@ class _ThankYouViewState extends State<ThankYouView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: SafeArea(
-          child: Column(
-            children: [
-              const Spacer(),
-              //AnimatedContainer
-              //AnimatedAlign
-              AnimatedAlign(
-                duration: const Duration(seconds: 2),
-                curve: Curves.bounceOut,
-                alignment: alignment,
-                child: AnimatedContainer(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+
+        return true;
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SafeArea(
+            child: Column(
+              children: [
+                const Spacer(),
+                //AnimatedContainer
+                //AnimatedAlign
+                AnimatedAlign(
                   duration: const Duration(seconds: 2),
                   curve: Curves.bounceOut,
-                  height: initailHeight,
-                  child: Image.asset(
-                    "assets/ty.png",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  );
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 70.0,
-                  alignment: Alignment.center,
-                  color: Colors.orange,
-                  child: const Text(
-                    "Back to Home",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w500,
+                  alignment: alignment,
+                  child: AnimatedContainer(
+                    duration: const Duration(seconds: 2),
+                    curve: Curves.bounceOut,
+                    height: initailHeight,
+                    child: Image.asset(
+                      "assets/ty.png",
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-              ),
-            ],
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const HomePage(),
+                    //   ),
+                    // );
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 70.0,
+                    alignment: Alignment.center,
+                    color: Colors.orange,
+                    child: const Text(
+                      "Back to Home",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

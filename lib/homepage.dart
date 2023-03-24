@@ -41,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage>
     });
   }
 
+  User? currentUser = FirebaseAuth.instance.currentUser;
+
   bool pressed = false;
   int _index = 0;
 
@@ -51,6 +53,10 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
+    print("Current User id: ${currentUser!.uid}");
+    print("Current User id: ${currentUser!.displayName}");
+    print("Current User id: ${currentUser!.email}");
+    print("Current User id: ${currentUser!.phoneNumber}");
     return BlocBuilder<ThemeBloc, bool>(
       builder: (context, state) {
         return Scaffold(

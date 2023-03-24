@@ -124,9 +124,17 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     .read<CartBloc>()
                     .state
                     .getItemQuantity(widget.product.id),
-                addToFavorite: () => context.read<FavoritesBloc>().add(
-                      FavoriteItemAdded(widget.product),
-                    ),
+                addToFavorite: context
+                        .watch<FavoritesBloc>()
+                        .state
+                        .favoriteItem
+                        .contains(widget.product)
+                    ? () => context.read<FavoritesBloc>().add(
+                          FavoriteItemRemoved(widget.product.id),
+                        )
+                    : () => context.read<FavoritesBloc>().add(
+                          FavoriteItemAdded(widget.product),
+                        ),
                 product: widget.product,
               ),
             ),

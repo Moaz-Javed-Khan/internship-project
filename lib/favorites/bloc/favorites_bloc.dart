@@ -60,6 +60,15 @@ class FavoritesBloc extends HydratedBloc<FavoritesEvent, FavoritesState> {
   Map<String, dynamic>? toJson(FavoritesState state) => state.toJson();
 }
 
+
+
+
+
+
+
+
+
+
 /*
 final favoriteState = json['ZkXPUM1cgCWUAyVW3NL3isCk2gw1']['favoritesState'] as List;
 

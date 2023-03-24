@@ -89,12 +89,16 @@ class CarouselWidgetState extends State<CarouselWidget> {
             },
             child: GestureDetector(
               onTap: () {
+                var bloc = context.read<FavoritesBloc>();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProductDetailView(
-                      product: featuredProducts[index],
-                    ),
+                    builder: (context) {
+                      return ProductDetail(
+                        bloc: bloc,
+                        product: featuredProducts[index],
+                      );
+                    },
                   ),
                 );
               },

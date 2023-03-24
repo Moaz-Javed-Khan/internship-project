@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
 import 'package:internship_project/dark_mode/bloc/theme_bloc.dart';
-import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/homepage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'auth/sign up/view/sign_up_view.dart';

@@ -100,14 +100,14 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                       Text(
                         widget.product.name,
                         style: const TextStyle(
-                          fontSize: 17,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         '${widget.product.price.amount} ${widget.product.price.currency}',
                         style: const TextStyle(
-                          fontSize: 17,
+                          fontSize: 15,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -115,7 +115,7 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                   ),
                 ],
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 3),
               ProductCardFooterWidget(
                 // incrementCounter: () => newOnChanged(count + 1),
                 incrementCounter: () => context
@@ -123,9 +123,28 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                     .add(CartItemIncrement(widget.product.id)),
                 // decrementCounter: () => newOnChanged(count - 1),
                 decrementCounter: (itemQuantity <= 1)
-                    ? () => context
-                        .read<CartBloc>()
-                        .add(CartItemRemoved(widget.product.id))
+                    ? () => showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: const Text("Are you sure"),
+                              actions: [
+                                TextButton(
+                                  child: const Text("Yes"),
+                                  onPressed: () {
+                                    context.read<CartBloc>().add(
+                                        CartItemRemoved(widget.product.id));
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text("No"),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            );
+                          },
+                        )
                     : () => context
                         .read<CartBloc>()
                         .add(CartItemDecrement(widget.product.id)),
@@ -153,9 +172,17 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                     .state
                     .getItemQuantity(widget.product.id),
                 // context.read<CartBloc>().add(CartItemAdded(widget.product, widget.product.quantity)),
-                addToFavorite: () => context.read<FavoritesBloc>().add(
-                      FavoriteItemAdded(widget.product),
-                    ),
+                addToFavorite: context
+                        .watch<FavoritesBloc>()
+                        .state
+                        .favoriteItem
+                        .contains(widget.product)
+                    ? () => context.read<FavoritesBloc>().add(
+                          FavoriteItemRemoved(widget.product.id),
+                        )
+                    : () => context.read<FavoritesBloc>().add(
+                          FavoriteItemAdded(widget.product),
+                        ),
                 product: widget.product,
               ),
             ],

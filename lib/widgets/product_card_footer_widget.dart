@@ -85,7 +85,7 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                           children: [
                             const Text(
                               "Add to Cart ",
-                              style: TextStyle(fontSize: 17),
+                              style: TextStyle(fontSize: 14),
                             ),
                             const Icon(Icons.shopping_cart),
                           ],

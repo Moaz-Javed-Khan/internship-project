@@ -7,7 +7,7 @@
         "description": "item 0 description",
         "featured": true,
         "price": {
-            "amount": 2000.00,
+            "amount": 200.00,
             "currency": "PKR"
         }
     },
@@ -19,7 +19,7 @@
         "description": "item 1 description",
         "featured": false,
         "price": {
-            "amount": 1000.00,
+            "amount": 100.00,
             "currency": "PKR"
         }
     },

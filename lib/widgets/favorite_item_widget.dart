@@ -21,12 +21,16 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        var bloc = context.read<FavoritesBloc>();
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailView(
-              product: widget.favoriteItem,
-            ),
+            builder: (context) {
+              return ProductDetail(
+                bloc: bloc,
+                product: widget.favoriteItem,
+              );
+            },
           ),
         );
       },
