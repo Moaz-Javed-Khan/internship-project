@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
+import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
+import 'package:internship_project/models/product_model.dart';
 import 'package:internship_project/widgets/item_counter_widget.dart';
 import 'package:internship_project/widgets/reset_counter_widget.dart';
 
@@ -13,16 +15,25 @@ class ProductCardFooterWidget extends StatefulWidget {
     required this.onChanged,
     required this.addToCart,
     required this.id,
+    required this.maxItem,
+    required this.quantity,
+    required this.addToFavorite,
+    required this.product,
     // required this.count,
   });
 
   final void Function() incrementCounter;
   final void Function()? decrementCounter;
   final void Function() resetCounter;
+  final void Function() addToFavorite;
   final void Function() addToCart;
   final void Function(String value) onChanged;
   final int id;
+  final int maxItem;
+  final int quantity;
   // final int count;
+
+  final ProductModel product;
 
   @override
   State<ProductCardFooterWidget> createState() =>
@@ -37,20 +48,24 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
     return Expanded(
       child: Column(
         children: [
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           Row(
             children: [
               (context.watch<CartBloc>().state.getItemQuantity(widget.id) > 0)
-                  ? ItemCounterWidget(
-                      addToCart: widget.addToCart,
-                      incrementCounter: widget.incrementCounter,
-                      decrementCounter: widget.decrementCounter,
-                      onChanged: widget.onChanged,
-                      // count: widget.count,
-                      count: context
-                          .watch<CartBloc>()
-                          .state
-                          .getItemQuantity(widget.id),
+                  ? Container(
+                      margin: const EdgeInsets.only(left: 23),
+                      child: ItemCounterWidget(
+                        addToCart: widget.addToCart,
+                        incrementCounter: widget.incrementCounter,
+                        decrementCounter: widget.decrementCounter,
+                        onChanged: widget.onChanged,
+                        // count: widget.count,
+                        count: context
+                            .watch<CartBloc>()
+                            .state
+                            .getItemQuantity(widget.id),
+                        maxItem: widget.maxItem,
+                      ),
                     )
                   : Container(
                       height: 45,
@@ -59,7 +74,7 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: Colors.blue,
+                          color: Colors.orange,
                           width: 1,
                         ),
                       ),
@@ -70,7 +85,7 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                           children: [
                             const Text(
                               "Add to Cart ",
-                              style: TextStyle(fontSize: 17),
+                              style: TextStyle(fontSize: 14),
                             ),
                             const Icon(Icons.shopping_cart),
                           ],
@@ -79,33 +94,30 @@ class _ProductCardFooterWidgetState extends State<ProductCardFooterWidget> {
                     ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // (widget.quantity > 1)
-              //     ? const SizedBox(
-              //         height: 1,
-              //       )
-              //     :
-
-              ResetCounterWidget(
-                resetCounter: widget.resetCounter,
-              ),
+              (widget.quantity > 0)
+                  ? ResetCounterWidget(
+                      resetCounter: widget.resetCounter,
+                    )
+                  : const SizedBox(
+                      height: 1,
+                    ),
               // Icons.favorite : Icons.favorite_border
-              Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: Colors.blue,
-                    width: 1,
-                  ),
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.favorite),
-                  onPressed: () {},
-                ),
+              IconButton(
+                icon: context
+                        .watch<FavoritesBloc>()
+                        .state
+                        .favoriteItem
+                        .contains(widget.product)
+                    ? const Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
+                    : const Icon(Icons.favorite_border),
+                onPressed: widget.addToFavorite,
               ),
             ],
           ),

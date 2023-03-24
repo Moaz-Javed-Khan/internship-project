@@ -1,13 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:internship_project/auth/sign%20in/view/sign_in_view.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
 import 'package:internship_project/dark_mode/bloc/theme_bloc.dart';
 import 'package:internship_project/cart/view/cart_view.dart';
+import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/favorites/view/favorites_view.dart';
-import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/products/view/product_view.dart';
-// import 'package:internship_project/widgets/badge.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => FavoritesBloc(),
+      child: MyHomePage(),
+    );
+  }
+}
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -28,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage>
     });
   }
 
+  User? currentUser = FirebaseAuth.instance.currentUser;
+
   bool pressed = false;
   int _index = 0;
 
@@ -38,11 +53,15 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
+    print("Current User id: ${currentUser!.uid}");
+    print("Current User id: ${currentUser!.displayName}");
+    print("Current User id: ${currentUser!.email}");
+    print("Current User id: ${currentUser!.phoneNumber}");
     return BlocBuilder<ThemeBloc, bool>(
       builder: (context, state) {
         return Scaffold(
           bottomNavigationBar: Container(
-            color: Colors.blue,
+            color: Colors.orange,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GNav(
@@ -52,9 +71,10 @@ class _MyHomePageState extends State<MyHomePage>
                     _index = value;
                   });
                 },
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.orange,
                 color: Colors.white,
                 tabBackgroundColor: Colors.white,
+                activeColor: Colors.black,
                 padding: const EdgeInsets.all(16),
                 gap: 12,
                 // ignore: prefer_const_literals_to_create_immutables
@@ -72,10 +92,11 @@ class _MyHomePageState extends State<MyHomePage>
             ),
           ),
           appBar: AppBar(
+            backgroundColor: Colors.orange,
             title: const Text("E-commerce App"),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(top: 6.0, right: 12),
+                padding: const EdgeInsets.only(top: 8.0, right: 12),
                 child: Badge(
                   // label: const Text("0"),
                   label: Text(
@@ -108,6 +129,24 @@ class _MyHomePageState extends State<MyHomePage>
                         : CrossFadeState.showSecond,
                     duration: const Duration(milliseconds: 1200),
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0, right: 4.0),
+                child: IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    // ignore: use_build_context_synchronously
+                    context.read<CartBloc>().add(const ClearCartItem());
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInView(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

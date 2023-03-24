@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internship_project/cart/bloc/cart_bloc.dart';
+import 'package:internship_project/favorites/bloc/favorites_bloc.dart';
 import 'package:internship_project/models/cart_item_model.dart';
 import 'package:internship_project/models/product_model.dart';
 import 'package:internship_project/products/bloc/product_bloc.dart';
@@ -71,7 +72,10 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
     var itemQuantity =
         context.watch<CartBloc>().state.getItemQuantity(widget.product.id);
     return Card(
-      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      margin: const EdgeInsets.all(8),
+      elevation: 8,
+      shadowColor: Colors.black26,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ClipRRect(
@@ -79,13 +83,14 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                "assets/image.jpg",
-                height: 85,
+              Image.network(
+                // "assets/image.jpg",
+                widget.product.image,
+                height: 100,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 4),
               Column(
                 children: [
                   Row(
@@ -94,29 +99,23 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                     children: [
                       Text(
                         widget.product.name,
-                        style: const TextStyle(fontSize: 17),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            widget.product.price.amount.toString(),
-                            style: const TextStyle(fontSize: 17),
-                          ),
-                          Text(
-                            widget.product.price.currency,
-                            style: const TextStyle(fontSize: 17),
-                          ),
-                        ],
+                      Text(
+                        '${widget.product.price.amount} ${widget.product.price.currency}',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
-                  Text(
-                    widget.product.description,
-                    style: const TextStyle(fontSize: 15, color: Colors.grey),
-                  ),
                 ],
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 3),
               ProductCardFooterWidget(
                 // incrementCounter: () => newOnChanged(count + 1),
                 incrementCounter: () => context
@@ -124,9 +123,28 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                     .add(CartItemIncrement(widget.product.id)),
                 // decrementCounter: () => newOnChanged(count - 1),
                 decrementCounter: (itemQuantity <= 1)
-                    ? () => context
-                        .read<CartBloc>()
-                        .add(CartItemRemoved(widget.product.id))
+                    ? () => showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: const Text("Are you sure"),
+                              actions: [
+                                TextButton(
+                                  child: const Text("Yes"),
+                                  onPressed: () {
+                                    context.read<CartBloc>().add(
+                                        CartItemRemoved(widget.product.id));
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text("No"),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            );
+                          },
+                        )
                     : () => context
                         .read<CartBloc>()
                         .add(CartItemDecrement(widget.product.id)),
@@ -148,7 +166,24 @@ class _ProductItemWidgetState extends State<ProductItemWidget> {
                       .add(CartItemIncrement(widget.product.id));
                   context.read<CartBloc>().add(CartItemAdded(widget.product));
                 },
+                maxItem: widget.product.maxItem,
+                quantity: context
+                    .read<CartBloc>()
+                    .state
+                    .getItemQuantity(widget.product.id),
                 // context.read<CartBloc>().add(CartItemAdded(widget.product, widget.product.quantity)),
+                addToFavorite: context
+                        .watch<FavoritesBloc>()
+                        .state
+                        .favoriteItem
+                        .contains(widget.product)
+                    ? () => context.read<FavoritesBloc>().add(
+                          FavoriteItemRemoved(widget.product.id),
+                        )
+                    : () => context.read<FavoritesBloc>().add(
+                          FavoriteItemAdded(widget.product),
+                        ),
+                product: widget.product,
               ),
             ],
           ),
